@@ -137,6 +137,10 @@ docker-compose up -d
 ### Web 管理页面
 ![Web 管理页面图片](https://github.com/pjialin/py12306/blob/master/data/images/web.png)
 
+## 待优化项目：
+1. 添加配置文件的web管理界面便于用户操作
+2. 添加更多的打包方式便于其他用户使用
+
 ### 下单成功
 ![下单成功图片](https://github.com/pjialin/py12306/blob/master/data/images/order_success.png)
 
