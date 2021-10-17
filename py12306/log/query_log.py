@@ -1,13 +1,10 @@
 # -*- coding:utf-8 -*-
-import datetime
-import json
-import sys
 from os import path
 
-from py12306.config import Config
 from py12306.cluster.cluster import Cluster
-from py12306.log.base import BaseLog
 from py12306.helpers.func import *
+from py12306.inner_config import Config
+from py12306.log.base import BaseLog
 
 
 @singleton

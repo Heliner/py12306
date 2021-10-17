@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
-import json
 import re
 from os import path
-
 # 12306 账号
+from typing import Dict
+
 from py12306.helpers.func import *
 
 
-@singleton
-class Config:
+class Config(object):
     IS_DEBUG = False
 
     USER_ACCOUNTS = []
@@ -22,7 +21,7 @@ class Config:
     QUERY_JOB_THREAD_ENABLED = 0
     # 打码平台账号
     AUTO_CODE_PLATFORM = ''
-    #用户打码平台地址
+    # 用户打码平台地址
     API_USER_CODE_QCR_API = ''
     AUTO_CODE_ACCOUNT = {'user': '', 'pwd': ''}
     # 输出日志到文件
@@ -43,6 +42,7 @@ class Config:
 
     STATION_FILE = PROJECT_DIR + 'data/stations.txt'
     CONFIG_FILE = PROJECT_DIR + 'env.py'
+    NEW_JSON_CONFIG_FILE = PROJECT_DIR + 'new_yaml_env.json'
 
     # 语音验证码
     NOTIFICATION_BY_VOICE_CODE = 0
@@ -116,13 +116,18 @@ class Config:
         'REDIS_PASSWORD',
     ]
 
-    def __init__(self):
-        self.init_envs()
+    def __init__(self, ):
+        # self.init_envs()
+        self.init_envs_from_json()
         self.last_modify_time = get_file_modify_time(self.CONFIG_FILE)
-        if Config().is_slave():
-            self.refresh_configs(True)
-        else:
-            create_thread_and_run(self, 'watch_file_change', False)
+        # if Config().is_slave():
+        #     self.refresh_configs(True)
+        # else:
+        #     create_thread_and_run(self, 'watch_file_change', False)
+        pass
+
+    def test_self(self, ):
+        print(self)
 
     @classmethod
     def run(cls):
@@ -158,6 +163,20 @@ class Config:
     def init_envs(self):
         self.envs = EnvLoader.load_with_file(self.CONFIG_FILE)
         self.update_configs(self.envs)
+
+    def init_envs_from_json(self):
+        self.envs = self.load_data_from_json(self.NEW_JSON_CONFIG_FILE)
+        self.update_configs_from_json(self.envs)
+        return self.envs
+
+    def update_configs_from_json(self, envs: Dict):
+        for key, value in envs.items():
+            setattr(self, key, value)
+
+    def save_config_2_file(self, file_path: str):
+        with open(file_path, mode='w', encoding='utf8') as file:
+            json_str = json.dumps(self.envs, ensure_ascii=False, indent=4)
+            file.write(json_str)
 
     def update_configs(self, envs):
         for key, value in envs:
@@ -222,6 +241,17 @@ class Config:
     @staticmethod
     def is_cache_rail_id_enabled():
         return Config().CACHE_RAIL_ID_ENABLED
+
+    def load_data_from_json(self, file_path: str):
+        if path.exists(file_path):
+            with open(file_path, encoding='utf8') as file:
+                return json.load(file)
+        return None
+
+    def dump_data_2_json(self, file_path: str):
+        if path.exists(file_path):
+            with open(file_path, encoding='utf8') as file:
+                return json.dump(self, file)
 
 
 class EnvLoader:

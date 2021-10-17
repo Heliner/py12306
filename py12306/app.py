@@ -3,8 +3,8 @@ import signal
 import sys
 
 from py12306.helpers.func import *
-from py12306.config import Config
 from py12306.helpers.notification import Notification
+from py12306.inner_config import Config
 from py12306.log.common_log import CommonLog
 from py12306.log.order_log import OrderLog
 

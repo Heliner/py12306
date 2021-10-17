@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import sys
 
 from py12306.app import *
 from py12306.helpers.cdn import Cdn
@@ -45,13 +44,13 @@ def test():
     """
     Const.IS_TEST = True
     Config.OUT_PUT_LOG_TO_FILE_ENABLED = False
-    if '--test-notification' in sys.argv or '-n' in sys.argv:
+    if '--tests-notification' in sys.argv or '-n' in sys.argv:
         Const.IS_TEST_NOTIFICATION = True
     pass
 
 
 def load_argvs():
-    if '--test' in sys.argv or '-t' in sys.argv: test()
+    if '--tests' in sys.argv or '-t' in sys.argv: test()
     config_index = None
 
     if '--config' in sys.argv: config_index = sys.argv.index('--config')

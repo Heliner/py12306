@@ -3,18 +3,18 @@ import pickle
 import re
 from os import path
 
+from py12306.app import *
 from py12306.cluster.cluster import Cluster
 from py12306.helpers.api import *
-from py12306.app import *
 from py12306.helpers.auth_code import AuthCode
 from py12306.helpers.event import Event
 from py12306.helpers.func import *
+from py12306.helpers.qrcode import print_qrcode
 from py12306.helpers.request import Request
 from py12306.helpers.type import UserType
-from py12306.helpers.qrcode import print_qrcode
+from py12306.log.common_log import CommonLog
 from py12306.log.order_log import OrderLog
 from py12306.log.user_log import UserLog
-from py12306.log.common_log import CommonLog
 
 
 class UserJob:
@@ -270,15 +270,15 @@ class UserJob:
                     result = response.text[18:-2]
                 result = json.loads(result)
                 if not Config().is_cache_rail_id_enabled():
-                   self.session.cookies.update({
-                       'RAIL_EXPIRATION': result.get('exp'),
-                       'RAIL_DEVICEID': result.get('dfp'),
-                   })
+                    self.session.cookies.update({
+                        'RAIL_EXPIRATION': result.get('exp'),
+                        'RAIL_DEVICEID': result.get('dfp'),
+                    })
                 else:
-                   self.session.cookies.update({
-                       'RAIL_EXPIRATION': Config().RAIL_EXPIRATION,
-                       'RAIL_DEVICEID': Config().RAIL_DEVICEID,
-                   })
+                    self.session.cookies.update({
+                        'RAIL_EXPIRATION': Config().RAIL_EXPIRATION,
+                        'RAIL_DEVICEID': Config().RAIL_DEVICEID,
+                    })
             except:
                 return False
 

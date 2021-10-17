@@ -1,13 +1,11 @@
 import json
 import re
 
-from flask import Blueprint, request, send_file
+from flask import Blueprint
 from flask.json import jsonify
 from flask_jwt_extended import (jwt_required)
 
-from py12306.config import Config
-from py12306.query.query import Query
-from py12306.user.user import User
+from py12306.inner_config import Config
 
 app = Blueprint('app', __name__)
 

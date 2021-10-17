@@ -1,14 +1,11 @@
-import random
-import json
-from datetime import timedelta
 from os import path
 
-from py12306.cluster.cluster import Cluster
-from py12306.config import Config
 from py12306.app import app_available_check
+from py12306.cluster.cluster import Cluster
 from py12306.helpers.api import API_CHECK_CDN_AVAILABLE, HOST_URL_OF_12306
 from py12306.helpers.func import *
 from py12306.helpers.request import Request
+from py12306.inner_config import Config
 from py12306.log.common_log import CommonLog
 
 

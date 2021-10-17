@@ -1,10 +1,9 @@
-import os
-import sys
 import io
+import sys
 from contextlib import redirect_stdout
 
-from py12306.config import Config
 from py12306.helpers.func import *
+from py12306.inner_config import Config
 
 
 class BaseLog:

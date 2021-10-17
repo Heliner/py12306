@@ -1,5 +1,5 @@
-from py12306.log.base import BaseLog
 from py12306.helpers.func import *
+from py12306.log.base import BaseLog
 
 
 @singleton
@@ -26,8 +26,6 @@ class ClusterLog(BaseLog):
     MESSAGE_MASTER_NODE_NOT_FOUND = '# 启动失败，请先启动主节点 #'
 
     MESSAGE_NODE_BECOME_MASTER_AGAIN = '# 节点 {} 已启动，已自动成为主节点 #'
-
-
 
     @staticmethod
     def get_print_nodes(nodes):

@@ -1,8 +1,8 @@
 import urllib
 
-from py12306.config import Config
 from py12306.helpers.api import *
 from py12306.helpers.request import Request
+from py12306.inner_config import Config
 from py12306.log.common_log import CommonLog
 
 

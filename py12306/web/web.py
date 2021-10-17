@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
-import json
 import logging
 from datetime import timedelta
 
-from flask import Flask, request
+from flask import Flask
 from flask_jwt_extended import (
     JWTManager)
 
-from py12306.config import Config
 from py12306.helpers.func import *
+from py12306.inner_config import Config
 
 
 @singleton

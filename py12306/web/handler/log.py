@@ -1,14 +1,10 @@
-import linecache
-
 from flask import Blueprint, request
 from flask.json import jsonify
 from flask_jwt_extended import (jwt_required)
 
-from py12306.config import Config
 from py12306.helpers.func import get_file_total_line_num, pick_file_lines
+from py12306.inner_config import Config
 from py12306.log.common_log import CommonLog
-from py12306.query.query import Query
-from py12306.user.user import User
 
 log = Blueprint('log', __name__)
 

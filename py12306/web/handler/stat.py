@@ -1,8 +1,8 @@
-from flask import Blueprint, request
+from flask import Blueprint
 from flask.json import jsonify
 from flask_jwt_extended import (jwt_required)
 
-from py12306.config import Config
+from py12306.inner_config import Config
 from py12306.query.query import Query
 from py12306.user.user import User
 

@@ -1,5 +1,5 @@
 from py12306.helpers.func import *
-from py12306.config import Config
+from py12306.inner_config import Config
 
 
 @singleton

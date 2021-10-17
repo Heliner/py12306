@@ -2,8 +2,8 @@ from flask import Blueprint, request
 from flask.json import jsonify
 from flask_jwt_extended import (jwt_required, create_access_token)
 
-from py12306.config import Config
-from py12306.helpers.func import str_to_time, timestamp_to_time
+from py12306.helpers.func import timestamp_to_time
+from py12306.inner_config import Config
 from py12306.user.job import UserJob
 from py12306.user.user import User
 

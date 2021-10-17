@@ -1,15 +1,10 @@
-import json
-import os
 import pickle
-import sys
-import time
 
-import redis
 from redis.client import PubSub
 
 from py12306.cluster.redis import Redis
-from py12306.config import Config
 from py12306.helpers.func import *
+from py12306.inner_config import Config
 from py12306.log.cluster_log import ClusterLog
 
 
@@ -196,7 +191,8 @@ class Cluster():
         while True:
             if self.node_name not in self.get_nodes():  # 已经被 kict out  重新加下
                 self.join_cluster()
-            self.session.set(self.KEY_NODES_ALIVE_PREFIX + self.node_name, Config().NODE_IS_MASTER, ex=self.lost_alive_time)
+            self.session.set(self.KEY_NODES_ALIVE_PREFIX + self.node_name, Config().NODE_IS_MASTER,
+                             ex=self.lost_alive_time)
             stay_second(self.keep_alive_time)
 
     def subscribe(self):

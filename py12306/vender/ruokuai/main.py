@@ -1,5 +1,6 @@
-import requests
 from hashlib import md5
+
+import requests
 
 
 class RKClient(object):
@@ -51,4 +52,3 @@ if __name__ == '__main__':
     rc = RKClient('username', 'password', 'soft_id', 'soft_key')
     # im = open('a.jpg', 'rb').read()
     # print rc.rk_create(im, 3040)
-

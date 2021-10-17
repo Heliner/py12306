@@ -1,13 +1,15 @@
 # 🚂 py12306 购票助手
+
 分布式，多账号，多任务购票
 
 ## Features
+
 - [x] 多日期查询余票
 - [x] 自动打码下单
 - [x] 用户状态恢复
 - [x] 电话语音通知
 - [x] 多账号、多任务、多线程支持
-- [x] 单个任务多站点查询 
+- [x] 单个任务多站点查询
 - [x] 分布式运行
 - [x] Docker 支持
 - [x] 动态修改配置文件
@@ -17,9 +19,11 @@
 - [ ] 代理池支持 ([pyproxy-async](https://github.com/pjialin/pyproxy-async))
 
 ## 使用
+
 py12306 需要运行在 python 3.6 以上版本（其它版本暂未测试)
 
 **1. 安装依赖**
+
 ```bash
 git clone https://github.com/pjialin/py12306
 
@@ -27,34 +31,41 @@ pip install -r requirements.txt
 ```
 
 **2. 配置程序**
+
 ```bash
 cp env.py.example env.py
 ```
+
 自动打码
 
-（若快已停止服务，目前只能设置**free**打码模式）
-free 已对接到打码共享平台，[https://py12306-helper.pjialin.com](https://py12306-helper.pjialin.com/)，欢迎参与分享
+（若快已停止服务，目前只能设置**free**打码模式） free
+已对接到打码共享平台，[https://py12306-helper.pjialin.com](https://py12306-helper.pjialin.com/)，欢迎参与分享
 
 语音通知
 
-语音验证码使用的是阿里云 API 市场上的一个服务商，需要到 [https://market.aliyun.com/products/56928004/cmapi026600.html](https://market.aliyun.com/products/56928004/cmapi026600.html) 购买后将 appcode 填写到配置中
+语音验证码使用的是阿里云 API
+市场上的一个服务商，需要到 [https://market.aliyun.com/products/56928004/cmapi026600.html](https://market.aliyun.com/products/56928004/cmapi026600.html)
+购买后将 appcode 填写到配置中
 
 **3. 启动前测试**
 
 目前提供了一些简单的测试，包括用户账号检测，乘客信息检测，车站检测等
 
-开始测试 -t 
+开始测试 -t
+
 ```bash
 python main.py -t
 ```
 
 测试通知消息 (语音, 邮件) -t -n
+
 ```bash
 # 默认不会进行通知测试，要对通知进行测试需要加上 -n 参数 
 python main.py -t -n
 ```
 
 **4. 运行程序**
+
 ```bash
 python main.py
 ```
@@ -68,6 +79,7 @@ python main.py
 ### 分布式集群
 
 集群依赖于 redis，目前支持情况
+
 - 单台主节点多个子节点同时运行
 - 主节点宕机后自动切换提升子节点为主节点
 - 主节点恢复后自动恢复为真实主节点
@@ -81,9 +93,10 @@ python main.py
 
 目前提供了一个单独的子节点配置文件 `env.slave.py.example` 将文件修改为 `env.slave.py`， 通过 `python main.py -c env.slave.py` 即可快速启动
 
-
 ## Docker 使用
+
 **1. 将配置文件下载到本地**
+
 ```bash
 docker run --rm pjialin/py12306 cat /config/env.py > env.py
 # 或
@@ -91,13 +104,17 @@ curl https://raw.githubusercontent.com/pjialin/py12306/master/env.docker.py.exam
 ```
 
 **2. 修改好配置后运行**
+
 ```bash
 docker run --rm --name py12306 -p 8008:8008 -d -v $(pwd):/config -v py12306:/data pjialin/py12306
 ```
+
 当前目录会多一个 12306.log 的日志文件， `tail -f 12306.log`
 
 ### Docker-compose 中使用
+
 **1. 复制配置文件**
+
 ```
 cp docker-compose.yml.example docker-compose.yml
 ```
@@ -105,6 +122,7 @@ cp docker-compose.yml.example docker-compose.yml
 **2. 从 docker-compose 运行**
 
 在`docker-compose.yml`所在的目录使用命令
+
 ```
 docker-compose up -d
 ```
@@ -118,6 +136,7 @@ docker-compose up -d
 打开 Web 功能需要将配置中的 `WEB_ENABLE` 打开，启动程序后访问当前主机地址 + 端口号 (默认 8008) 即可，如 http://127.0.0.1:8008
 
 ## 更新
+
 - 19-01-10
     - 支持分布式集群
 - 19-01-11
@@ -134,27 +153,35 @@ docker-compose up -d
     - 新增 CDN 查询
 
 ## 截图
+
 ### Web 管理页面
+
 ![Web 管理页面图片](https://github.com/pjialin/py12306/blob/master/data/images/web.png)
 
 ## 待优化项目：
+
 1. 添加配置文件的web管理界面便于用户操作
 2. 添加更多的打包方式便于其他用户使用
 
 ### 下单成功
+
 ![下单成功图片](https://github.com/pjialin/py12306/blob/master/data/images/order_success.png)
 
 ### 关于防封
+
 目前查询和登录操作是分开的，查询是不依赖用户是否登录，放在 A 云 T 云容易被限制 ip，建议在其它网络环境下运行
 
-QQ 交流群 [780289875](https://jq.qq.com/?_wv=1027&k=5PgzDwV)，TG 群 [Py12306 交流](https://t.me/joinchat/F3sSegrF3x8KAmsd1mTu7w)
+QQ 交流群 [780289875](https://jq.qq.com/?_wv=1027&k=5PgzDwV)，TG
+群 [Py12306 交流](https://t.me/joinchat/F3sSegrF3x8KAmsd1mTu7w)
 
 ### Online IDE
+
 [![在 Gitpod 中打开](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/pjialin/py12306)
 
 ## Thanks
+
 - 感谢大佬 [testerSunshine](https://github.com/testerSunshine/12306)，借鉴了部分实现
-- 感谢所有提供 pr 的大佬 
+- 感谢所有提供 pr 的大佬
 - 感谢大佬 [zhaipro](https://github.com/zhaipro/easy12306) 的验证码本地识别模型与算法
 
 ## License
