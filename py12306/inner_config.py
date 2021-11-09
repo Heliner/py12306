@@ -5,6 +5,7 @@ from os import path
 from typing import Dict
 
 from py12306.helpers.func import *
+from py12306.log.order_log import OrderLog
 
 
 class Config(object):
@@ -42,7 +43,7 @@ class Config(object):
 
     STATION_FILE = PROJECT_DIR + 'data/stations.txt'
     CONFIG_FILE = PROJECT_DIR + 'env.py'
-    NEW_JSON_CONFIG_FILE = PROJECT_DIR + 'new_yaml_env.json'
+    NEW_JSON_CONFIG_FILE = PROJECT_DIR + 'env.json'
 
     # 语音验证码
     NOTIFICATION_BY_VOICE_CODE = 0
@@ -273,3 +274,15 @@ class EnvLoader:
         super().__setattr__(key, value)
         if re.search(r'^[A-Z]+_', key):
             self.envs.append(([key, value]))
+
+
+class WebLoader():
+    def __init__(self):
+        self.envs = []
+
+    def set_2_envs(self, origin_config: Config, req_config: Dict):
+        for key, val in req_config.values():
+            if hasattr(origin_config, key):
+                setattr(origin_config, key, val)
+            else:
+                OrderLog.add_quick_log(content='not found key:{} in Config object'.format(key))
