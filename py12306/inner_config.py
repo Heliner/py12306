@@ -7,6 +7,7 @@ from os import path
 from typing import Dict, List
 
 from py12306.helpers.func import *
+from py12306.log.order_log import OrderLog
 
 
 class Config(object):

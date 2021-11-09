@@ -36,3 +36,17 @@ def set_config():
     _conf.save_config_2_file(_conf.NEW_JSON_CONFIG_FILE)
     response = jsonify(dict())
     return response
+
+
+@config.route('/set-config', methods=['POST'])
+@jwt_required
+def config_lists():
+    """
+    查询任务列表
+    :return:
+    """
+    req_config = request.json.get('data', None)
+
+    web_loader = WebLoader()
+    web_loader.set_2_envs(Config(), req_config)
+    Config.save_config_2_file(Config.NEW_JSON_CONFIG_FILE)
