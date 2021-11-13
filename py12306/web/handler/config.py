@@ -9,24 +9,30 @@ config = Blueprint('config', __name__)
 
 @config.route('/config', methods=['GET'])
 @jwt_required
-def config_lists():
+def get_config():
     """
     查询任务列表
     :return:
     """
-    envs = Config.envs
-    return jsonify(envs)
+    _conf = Config()
+    envs = _conf.parse_envs_2_dict(_conf.envs)
+    response = jsonify(envs)
+    return response
 
 
 @config.route('/set-config', methods=['POST'])
 @jwt_required
-def config_lists():
+def set_config():
     """
     查询任务列表
     :return:
     """
-    req_config = request.json.get('data', None)
+    req_config = request.json
 
     web_loader = WebLoader()
-    web_loader.set_2_envs(Config(), req_config)
-    Config.save_config_2_file(Config.NEW_JSON_CONFIG_FILE)
+    _conf = Config()
+    web_loader.set_2_config(_conf, req_config)
+    web_loader.set_2_envs(_conf, req_config)
+    _conf.save_config_2_file(_conf.NEW_JSON_CONFIG_FILE)
+    response = jsonify(dict())
+    return response

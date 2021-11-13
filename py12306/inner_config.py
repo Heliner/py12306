@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
+import logging
 import re
 from os import path
 # 12306 账号
-from typing import Dict
+from typing import Dict, List
 
 from py12306.helpers.func import *
-from py12306.log.order_log import OrderLog
 
 
 class Config(object):
-    IS_DEBUG = False
+    IS_DEBUG = True
 
     USER_ACCOUNTS = []
     # 查询任务
@@ -170,13 +170,21 @@ class Config(object):
         self.update_configs_from_json(self.envs)
         return self.envs
 
-    def update_configs_from_json(self, envs: Dict):
-        for key, value in envs.items():
+    def update_configs_from_json(self, envs: List):
+        for key, value in envs:
             setattr(self, key, value)
+
+    def parse_envs_2_dict(self, envs):
+        res_dict = dict()
+        for key, val in envs:
+            res_dict[key] = val
+        return res_dict
 
     def save_config_2_file(self, file_path: str):
         with open(file_path, mode='w', encoding='utf8') as file:
-            json_str = json.dumps(self.envs, ensure_ascii=False, indent=4)
+            envs_dict = self.parse_envs_2_dict(self.envs)
+            print("test self envs_dict:{}".format(envs_dict))
+            json_str = json.dumps(envs_dict, ensure_ascii=False, indent=4)
             file.write(json_str)
 
     def update_configs(self, envs):
@@ -246,14 +254,13 @@ class Config(object):
     def load_data_from_json(self, file_path: str):
         if path.exists(file_path):
             with open(file_path, encoding='utf8') as file:
-                return json.load(file)
+                return list(json.load(file).items())
         return None
 
     def dump_data_2_json(self, file_path: str):
         if path.exists(file_path):
             with open(file_path, encoding='utf8') as file:
                 return json.dump(self, file)
-
 
 class EnvLoader:
     envs = []
@@ -280,9 +287,12 @@ class WebLoader():
     def __init__(self):
         self.envs = []
 
-    def set_2_envs(self, origin_config: Config, req_config: Dict):
-        for key, val in req_config.values():
+    def set_2_config(self, origin_config: Config, req_config: Dict):
+        for key, val in req_config.items():
             if hasattr(origin_config, key):
                 setattr(origin_config, key, val)
             else:
-                OrderLog.add_quick_log(content='not found key:{} in Config object'.format(key))
+                logging.error('not found key:{} in Config object'.format(key))
+
+    def set_2_envs(self, origin_config: Config, req_config: Dict):
+        origin_config.envs = list(req_config.items())
