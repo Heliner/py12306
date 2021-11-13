@@ -7,7 +7,6 @@ from os import path
 from typing import Dict, List
 
 from py12306.helpers.func import *
-from py12306.log.order_log import OrderLog
 
 
 class Config(object):
@@ -268,7 +267,6 @@ class Config(object):
         if path.exists(file_path):
             with open(file_path, encoding='utf8') as file:
                 return json.dump(self, file)
-
 
 class EnvLoader:
     envs = []
