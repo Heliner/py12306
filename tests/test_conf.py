@@ -1,7 +1,5 @@
 import json
 
-from flask.json import jsonify
-
 from env import USER_ACCOUNTS
 from py12306.inner_config import Config
 
@@ -22,7 +20,7 @@ class TestLoadFromFile(object):
         print(json.loads(json.dumps(USER_ACCOUNTS)))
 
     # def test_config_lists(self):
-        # print("test config list :{}".format(jsonify(Config.envs)))
+    # print("test config list :{}".format(jsonify(Config.envs)))
 
 
 if __name__ == '__main__':

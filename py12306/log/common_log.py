@@ -1,4 +1,3 @@
-from py12306.helpers.func import *
 from py12306.inner_config import *
 from py12306.log.base import BaseLog
 

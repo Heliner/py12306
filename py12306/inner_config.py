@@ -35,6 +35,7 @@ class Config(object):
 
     PROJECT_DIR = path.dirname(path.dirname(path.abspath(__file__))) + '/'
 
+    print("we are in path of :{}".format(PROJECT_DIR))
     # Query
     RUNTIME_DIR = PROJECT_DIR + 'runtime/'
     QUERY_DATA_DIR = RUNTIME_DIR + 'query/'
@@ -261,6 +262,7 @@ class Config(object):
         if path.exists(file_path):
             with open(file_path, encoding='utf8') as file:
                 return json.dump(self, file)
+
 
 class EnvLoader:
     envs = []
