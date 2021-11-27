@@ -268,6 +268,7 @@ class Config(object):
             with open(file_path, encoding='utf8') as file:
                 return json.dump(self, file)
 
+
 class EnvLoader:
     envs = []
 
