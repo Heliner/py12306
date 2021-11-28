@@ -27,7 +27,6 @@ class Config(object):
     AUTO_CODE_ACCOUNT = {'user': '', 'pwd': ''}
     # 输出日志到文件
     OUT_PUT_LOG_TO_FILE_ENABLED = 0
-    OUT_PUT_LOG_TO_FILE_PATH = 'runtime/12306.log'
 
     SEAT_TYPES = {'特等座': 25, '商务座': 32, '一等座': 31, '二等座': 30, '软卧': 23, '硬卧': 28, '硬座': 29, '无座': 26, }
 
@@ -37,6 +36,7 @@ class Config(object):
 
     print("we are in path of :{}".format(PROJECT_DIR))
     # Query
+    OUT_PUT_LOG_TO_FILE_PATH = PROJECT_DIR + 'runtime/12306.log'
     RUNTIME_DIR = PROJECT_DIR + 'runtime/'
     QUERY_DATA_DIR = RUNTIME_DIR + 'query/'
     USER_DATA_DIR = RUNTIME_DIR + 'user/'
@@ -173,7 +173,10 @@ class Config(object):
 
     def update_configs_from_json(self, envs: List):
         for key, value in envs:
-            setattr(self, key, value)
+            if key == 'OUT_PUT_LOG_TO_FILE_PATH':
+                setattr(self, key, self.PROJECT_DIR + str(value))
+            else:
+                setattr(self, key, value)
 
     def parse_envs_2_dict(self, envs):
         res_dict = dict()

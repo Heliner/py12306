@@ -100,6 +100,7 @@ class App:
     def check_data_dir_exists():
         os.makedirs(Config().QUERY_DATA_DIR, exist_ok=True)
         os.makedirs(Config().USER_DATA_DIR, exist_ok=True)
+        print("file:{}, :{}".format(os.getcwd(), Config().OUT_PUT_LOG_TO_FILE_PATH))
         touch_file(Config().OUT_PUT_LOG_TO_FILE_PATH)
 
     @classmethod
