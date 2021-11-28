@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout
+from fbs_runtime.application_context.PyQt5 import ApplicationContext
+
 from py12306.app import *
 from py12306.helpers.cdn import Cdn
 from py12306.helpers.web_starter import WebStarter
@@ -61,5 +65,25 @@ def load_argvs():
         Config.CONFIG_FILE = sys.argv[config_index + 1:config_index + 2].pop()
 
 
+class MainWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        text = QLabel()
+        text.setWordWrap(True)
+        button = QPushButton('Next quote >')
+        layout = QVBoxLayout()
+        layout.addWidget(text)
+        layout.addWidget(button)
+        layout.setAlignment(button, Qt.AlignHCenter)
+        self.setLayout(layout)
+
+
 if __name__ == '__main__':
     main()
+    appctxt = ApplicationContext()
+    stylesheet = appctxt.get_resource('styles.qss')
+    appctxt.app.setStyleSheet(open(stylesheet).read())
+    window = MainWindow()
+    window.show()
+    exit_code = appctxt.app.exec_()
+    sys.exit(exit_code)
