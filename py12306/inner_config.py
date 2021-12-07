@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+import os
 import re
 from os import path
 # 12306 账号
@@ -32,7 +33,7 @@ class Config(object):
 
     ORDER_SEAT_TYPES = {'特等座': 'P', '商务座': 9, '一等座': 'M', '二等座': 'O', '软卧': 4, '硬卧': 3, '硬座': 1, '无座': 1}
 
-    PROJECT_DIR = path.dirname(path.dirname(path.abspath(__file__))) + '/'
+    PROJECT_DIR = os.getcwd() + '/'
 
     print("we are in path of :{}".format(PROJECT_DIR))
     # Query
@@ -43,8 +44,8 @@ class Config(object):
     USER_PASSENGERS_FILE = RUNTIME_DIR + 'user/%s_passengers.json'
 
     STATION_FILE = PROJECT_DIR + 'data/stations.txt'
-    CONFIG_FILE = PROJECT_DIR + 'env.py'
-    NEW_JSON_CONFIG_FILE = PROJECT_DIR + 'env.json'
+    CONFIG_FILE = PROJECT_DIR + 'config/env.py'
+    NEW_JSON_CONFIG_FILE = PROJECT_DIR + 'config/env.json'
 
     # 语音验证码
     NOTIFICATION_BY_VOICE_CODE = 0
@@ -167,6 +168,7 @@ class Config(object):
         self.update_configs(self.envs)
 
     def init_envs_from_json(self):
+        print("new_json_config_file :{}".format(self.NEW_JSON_CONFIG_FILE))
         self.envs = self.load_data_from_json(self.NEW_JSON_CONFIG_FILE)
         self.update_configs_from_json(self.envs)
         return self.envs
