@@ -1,9 +1,9 @@
 import math
 import random
 
-from py12306.config import Config
 from py12306.helpers.api import API_FREE_CODE_QCR_API
 from py12306.helpers.request import Request
+from py12306.inner_config import Config
 from py12306.log.common_log import CommonLog
 from py12306.vender.ruokuai.main import RKClient
 
@@ -59,9 +59,9 @@ class OCR:
             'img': img
         }
         if Config().AUTO_CODE_PLATFORM == 'free':
-           response = self.session.post(API_FREE_CODE_QCR_API, data=data, timeout=30)
+            response = self.session.post(API_FREE_CODE_QCR_API, data=data, timeout=30)
         else:
-           response = self.session.post(Config().API_USER_CODE_QCR_API, data=data, timeout=30)
+            response = self.session.post(Config().API_USER_CODE_QCR_API, data=data, timeout=30)
         result = response.json()
         if result.get('msg') == 'success':
             pos = result.get('result')

@@ -4,11 +4,11 @@ import urllib
 # from py12306.config import UserType
 from pyppeteer import launch
 
-from py12306.config import Config
 from py12306.helpers.api import *
 from py12306.helpers.func import *
 from py12306.helpers.notification import Notification
 from py12306.helpers.type import UserType, SeatType
+from py12306.inner_config import Config
 from py12306.log.common_log import CommonLog
 from py12306.log.order_log import OrderLog
 
@@ -123,7 +123,7 @@ class Order:
         """
         # Debug
         if Config().IS_DEBUG:
-            self.order_id = 'test'
+            self.order_id = 'tests'
             self.order_did_success()
             return random.randint(0, 10) > 7
         return self.normal_order()

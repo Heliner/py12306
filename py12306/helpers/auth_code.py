@@ -1,13 +1,9 @@
-import random
-import time
-
 from requests.exceptions import SSLError
 
-from py12306.config import Config
 from py12306.helpers.OCR import OCR
 from py12306.helpers.api import *
-from py12306.helpers.request import Request
 from py12306.helpers.func import *
+from py12306.inner_config import Config
 from py12306.log.common_log import CommonLog
 from py12306.log.user_log import UserLog
 
@@ -38,7 +34,7 @@ class AuthCode:
             return self.retry_get_auth_code()
         return position
 
-    def retry_get_auth_code(self): # TODO 安全次数检测
+    def retry_get_auth_code(self):  # TODO 安全次数检测
         CommonLog.add_quick_log(CommonLog.MESSAGE_RETRY_AUTH_CODE.format(self.retry_time)).flush()
         time.sleep(self.retry_time)
         return self.get_auth_code(self.session)

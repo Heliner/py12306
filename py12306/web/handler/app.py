@@ -1,13 +1,11 @@
 import json
 import re
 
-from flask import Blueprint, request, send_file
+from flask import Blueprint
 from flask.json import jsonify
 from flask_jwt_extended import (jwt_required)
 
-from py12306.config import Config
-from py12306.query.query import Query
-from py12306.user.user import User
+from py12306.inner_config import Config
 
 app = Blueprint('app', __name__)
 
@@ -38,7 +36,8 @@ def menus():
         {"id": 20, "name": "用户管理", "url": "/user", "icon": "fa fa-user"},
         {"id": 30, "name": "查询任务", "url": "/query", "icon": "fa fa-infinity"},
         {"id": 40, "name": "实时日志", "url": "/log/realtime", "icon": "fa fa-signature"},
-        {"id": 50, "name": "帮助", "url": "/help", "icon": "fa fa-search"}
+        {"id": 50, "name": "配置", "url": "/config", "icon": "fa fa-infinity"},
+        {"id": 60, "name": "帮助", "url": "/help", "icon": "fa fa-search"}
     ]
     return jsonify(menus)
 

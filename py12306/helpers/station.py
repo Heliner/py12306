@@ -1,7 +1,7 @@
 from os import path
 
-from py12306.config import Config
 from py12306.helpers.func import *
+from py12306.inner_config import Config
 
 
 @singleton
@@ -43,4 +43,3 @@ class Station:
     @classmethod
     def get_station_name_by_key(cls, key):
         return cls.get_station_by(key, 'key').get('name')
-

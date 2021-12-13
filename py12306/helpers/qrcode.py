@@ -19,8 +19,8 @@ def print_qrcode(path):
     threshold = (2 ** info['bitdepth']) / 2  # 色彩阈值
 
     # 识别二维码尺寸
-    x_flag = -1   # x 边距标志
-    y_flag = -1   # y 边距标志
+    x_flag = -1  # x 边距标志
+    y_flag = -1  # y 边距标志
     x_white = -1  # 定位图案白块 x 坐标
     y_white = -1  # 定位图案白块 y 坐标
 
@@ -92,7 +92,7 @@ def print_qrcode(path):
                 elif not black and not last_black:
                     output += whole_white
             else:
-                last_line[t:t+1] = [black]
+                last_line[t:t + 1] = [black]
             t = t + 1
             j += scale
         if dual_flag:

@@ -1,12 +1,10 @@
-import json
 import pickle
 
-import redis
-
-from py12306.config import Config
-from py12306.helpers.func import *
-from py12306.log.redis_log import RedisLog
 from redis import Redis as PyRedis
+
+from py12306.helpers.func import *
+from py12306.inner_config import Config
+from py12306.log.redis_log import RedisLog
 
 
 @singleton

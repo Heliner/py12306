@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
-import sys
+
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout
+from fbs_runtime.application_context.PyQt5 import ApplicationContext
 
 from py12306.app import *
 from py12306.helpers.cdn import Cdn
+from py12306.helpers.web_starter import WebStarter
 from py12306.log.common_log import CommonLog
 from py12306.query.query import Query
 from py12306.user.user import User
@@ -20,6 +24,7 @@ def main():
     Query.check_before_run()
 
     ####### 运行任务
+    WebStarter.open_manager_web()
     Web.run()
     Cdn.run()
     User.run()
@@ -45,13 +50,13 @@ def test():
     """
     Const.IS_TEST = True
     Config.OUT_PUT_LOG_TO_FILE_ENABLED = False
-    if '--test-notification' in sys.argv or '-n' in sys.argv:
+    if '--tests-notification' in sys.argv or '-n' in sys.argv:
         Const.IS_TEST_NOTIFICATION = True
     pass
 
 
 def load_argvs():
-    if '--test' in sys.argv or '-t' in sys.argv: test()
+    if '--tests' in sys.argv or '-t' in sys.argv: test()
     config_index = None
 
     if '--config' in sys.argv: config_index = sys.argv.index('--config')
@@ -60,5 +65,25 @@ def load_argvs():
         Config.CONFIG_FILE = sys.argv[config_index + 1:config_index + 2].pop()
 
 
+class MainWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        text = QLabel()
+        text.setWordWrap(True)
+        button = QPushButton('Next quote >')
+        layout = QVBoxLayout()
+        layout.addWidget(text)
+        layout.addWidget(button)
+        layout.setAlignment(button, Qt.AlignHCenter)
+        self.setLayout(layout)
+
+
 if __name__ == '__main__':
     main()
+    appctxt = ApplicationContext()
+    stylesheet = appctxt.get_resource('styles.qss')
+    appctxt.app.setStyleSheet(open(stylesheet).read())
+    window = MainWindow()
+    window.show()
+    exit_code = appctxt.app.exec_()
+    sys.exit(exit_code)

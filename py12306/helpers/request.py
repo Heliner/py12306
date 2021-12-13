@@ -1,8 +1,8 @@
 import requests
 from requests.exceptions import *
+from requests_html import HTMLSession, HTMLResponse
 
 from py12306.helpers.func import *
-from requests_html import HTMLSession, HTMLResponse
 
 requests.packages.urllib3.disable_warnings()
 
@@ -55,7 +55,7 @@ class Request(HTMLSession):
     def request(self, *args, **kwargs):  # 拦截所有错误
         try:
             if not 'timeout' in kwargs:
-                from py12306.config import Config
+                from py12306.inner_config import Config
                 kwargs['timeout'] = Config().TIME_OUT_OF_REQUEST
             response = super().request(*args, **kwargs)
             return response

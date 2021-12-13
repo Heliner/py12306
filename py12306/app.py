@@ -3,8 +3,8 @@ import signal
 import sys
 
 from py12306.helpers.func import *
-from py12306.config import Config
 from py12306.helpers.notification import Notification
+from py12306.inner_config import Config
 from py12306.log.common_log import CommonLog
 from py12306.log.order_log import OrderLog
 
@@ -100,6 +100,7 @@ class App:
     def check_data_dir_exists():
         os.makedirs(Config().QUERY_DATA_DIR, exist_ok=True)
         os.makedirs(Config().USER_DATA_DIR, exist_ok=True)
+        print("file:{}, :{}".format(os.getcwd(), Config().OUT_PUT_LOG_TO_FILE_PATH))
         touch_file(Config().OUT_PUT_LOG_TO_FILE_PATH)
 
     @classmethod

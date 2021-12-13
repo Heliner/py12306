@@ -1,12 +1,13 @@
 from base64 import b64decode
-from py12306.config import Config
-from py12306.cluster.cluster import Cluster
+
 from py12306.app import app_available_check
+from py12306.cluster.cluster import Cluster
+from py12306.helpers.api import API_QUERY_INIT_PAGE, API_GET_BROWSER_DEVICE_ID
 from py12306.helpers.func import *
 from py12306.helpers.request import Request
+from py12306.inner_config import Config
 from py12306.log.query_log import QueryLog
 from py12306.query.job import Job
-from py12306.helpers.api import API_QUERY_INIT_PAGE, API_GET_BROWSER_DEVICE_ID
 
 
 @singleton

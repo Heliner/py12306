@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-import json
 import logging
 from datetime import timedelta
 
-from flask import Flask, request
+from flask import Flask
+from flask_cors import CORS
 from flask_jwt_extended import (
     JWTManager)
 
-from py12306.config import Config
 from py12306.helpers.func import *
+from py12306.inner_config import Config
 
 
 @singleton
@@ -19,12 +19,16 @@ class Web:
 
     def __init__(self):
         self.session = Flask(__name__)
+        if Config.IS_DEBUG:
+            CORS(self.session)
+
         self.log = logging.getLogger('werkzeug')
         self.log.setLevel(logging.ERROR)
 
         self.register_blueprint()
         self.session.config['JWT_SECRET_KEY'] = 'secret'  # 目前都是本地，暂不用放配置文件
         self.session.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(seconds=60 * 60 * 24 * 7)  # Token 超时时间 7 天
+        self.session.config['PROPAGATE_EXCEPTIONS'] = True
         self.jwt = JWTManager(self.session)
 
     def register_blueprint(self):
@@ -33,10 +37,12 @@ class Web:
         from py12306.web.handler.app import app
         from py12306.web.handler.query import query
         from py12306.web.handler.log import log
+        from py12306.web.handler.config import config
         self.session.register_blueprint(user)
         self.session.register_blueprint(stat)
         self.session.register_blueprint(app)
         self.session.register_blueprint(query)
+        self.session.register_blueprint(config)
         self.session.register_blueprint(log)
 
     @classmethod
