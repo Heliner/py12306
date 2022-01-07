@@ -9,6 +9,5 @@ class WebStarter():
     def open_manager_web(cls):
         home_page_url = 'http://localhost:{}/'.format(Config().WEB_PORT)
         cmd = 'start {}'.format(home_page_url)
-        status = os.system(cmd)
-        print("we execute:{}, get status of {}".format(cmd, status))
+        _ = os.system(cmd)
 

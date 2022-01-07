@@ -37,20 +37,3 @@ def set_config():
     response = jsonify(dict())
     return response
 
-
-@config.route('/set-config', methods=['POST'])
-@jwt_required
-def set_config():
-    """
-    查询任务列表
-    :return:
-    """
-    req_config = request.json
-
-    web_loader = WebLoader()
-    _conf = Config()
-    web_loader.set_2_config(_conf, req_config)
-    web_loader.set_2_envs(_conf, req_config)
-    _conf.save_config_2_file(_conf.NEW_JSON_CONFIG_FILE)
-    response = jsonify(dict())
-    return response
