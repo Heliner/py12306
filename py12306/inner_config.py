@@ -10,7 +10,7 @@ from py12306.helpers.func import *
 
 
 class Config(object):
-    IS_DEBUG = True
+    IS_DEBUG = False
 
     USER_ACCOUNTS = []
     # 查询任务
@@ -35,7 +35,6 @@ class Config(object):
 
     PROJECT_DIR = os.getcwd() + '/'
 
-    print("we are in path of :{}".format(PROJECT_DIR))
     # Query
     OUT_PUT_LOG_TO_FILE_PATH = PROJECT_DIR + 'runtime/12306.log'
     RUNTIME_DIR = PROJECT_DIR + 'runtime/'
@@ -168,7 +167,6 @@ class Config(object):
         self.update_configs(self.envs)
 
     def init_envs_from_json(self):
-        print("new_json_config_file :{}".format(self.NEW_JSON_CONFIG_FILE))
         self.envs = self.load_data_from_json(self.NEW_JSON_CONFIG_FILE)
         self.update_configs_from_json(self.envs)
         return self.envs
@@ -189,7 +187,6 @@ class Config(object):
     def save_config_2_file(self, file_path: str):
         with open(file_path, mode='w', encoding='utf8') as file:
             envs_dict = self.parse_envs_2_dict(self.envs)
-            print("test self envs_dict:{}".format(envs_dict))
             json_str = json.dumps(envs_dict, ensure_ascii=False, indent=4)
             file.write(json_str)
 
